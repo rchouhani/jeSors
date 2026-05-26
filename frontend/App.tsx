@@ -1,21 +1,21 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { View, StatusBar, StyleSheet } from 'react-native';
 import SplashScreen from './src/screens/splash/Splash';
 
 const App = () => {
   return (
     // On utilise le style défini dans le StyleSheet plus bas
-    <SafeAreaView style={styles.root}>
-      <StatusBar barStyle="light-content" />
+    <View style={styles.root}>
+      <StatusBar barStyle="dark-content" backgroundColor="#F5F5F5" />
       <SplashScreen />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#F5F5F5',
   },
 });
 
