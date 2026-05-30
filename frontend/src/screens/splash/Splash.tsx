@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const SplashScreen = () => {
+// On ajoute ({ navigation }: any) pour permettre à l'écran de rediriger l'utilisateur
+const SplashScreen = ({ navigation }: any) => {
+  useEffect(() => {
+    const chrono = setTimeout(() => {
+      // Au bout de 3 secondes, on bascule vers le feed
+      navigation.replace('EventsFeed');
+    }, 3000);
+
+    return () => clearTimeout(chrono);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Image

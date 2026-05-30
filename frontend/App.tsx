@@ -1,22 +1,28 @@
 import React from 'react';
-import { View, StatusBar, StyleSheet } from 'react-native';
+import { StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import SplashScreen from './src/screens/splash/Splash';
+import EventsFeed from './src/screens/feed/EventsFeed';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    // On utilise le style défini dans le StyleSheet plus bas
-    <View style={styles.root}>
-      <StatusBar barStyle="dark-content" backgroundColor="#F5F5F5" />
-      <SplashScreen />
-    </View>
+    <NavigationContainer>
+      <StatusBar barStyle="dark-content" backgroundColor="#FAFAFA" />
+
+      <Stack.Navigator
+        initialRouteName="Splash"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="Splash" component={SplashScreen} />
+
+        <Stack.Screen name="EventsFeed" component={EventsFeed} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: '#F5F5F5',
-  },
-});
 
 export default App;
