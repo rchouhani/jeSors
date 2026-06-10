@@ -72,9 +72,7 @@ const EventDetails = ({ route, navigation }: EventDetailsProps) => {
           {/* Ligne Infos : Date et Heure */}
           <View style={styles.infoRow}>
             <Text style={styles.infoIcon}>📅</Text>
-            <Text style={styles.infoText}>
-              {event.date} • {event.time}
-            </Text>
+            <Text style={styles.infoText}>{event.date}</Text>
           </View>
 
           {/* Ligne Infos : Lieu et Adresse précise */}
