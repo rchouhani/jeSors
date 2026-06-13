@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   StatusBar,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 // On importe nos types globaux depuis le dossier partagé
 import { RootStackParamList } from '../../types/navigation';
@@ -30,9 +31,11 @@ const CATEGORY_COLORS: { [key: string]: string } = {
 };
 
 const EventDetails = ({ route, navigation }: EventDetailsProps) => {
-  // Grâce au typage strict, TypeScript sait automatiquement que 'event' respecte l'interface EventItem !
-  const { event } = route.params;
+  // mettre toujours les hooks d'état en haut du composant
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
 
+  const { event } = route.params;
   const categoryColor = CATEGORY_COLORS[event.category] || '#7A7A7A';
 
   return (
@@ -110,10 +113,37 @@ const EventDetails = ({ route, navigation }: EventDetailsProps) => {
 
       {/* 3. Bouton Fixe "Je participe" en bas de l'écran */}
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.participateButton} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={styles.participateButton}
+          activeOpacity={0.8}
+          onPress={() => setIsModalVisible(true)}
+        >
           <Text style={styles.participateButtonText}>Je participe</Text>
         </TouchableOpacity>
       </View>
+
+      {/* 4. Pop-up de demande de confirmation */}
+      <ConfirmationModal
+        isVisible={isModalVisible}
+        title="Confirmer ta participation ?"
+        subtitle={`${event.title} • ${event.date}`}
+        details={event.location}
+        onClose={() => setIsModalVisible(false)}
+        onConfirm={() => {
+          setIsModalVisible(false); // on ferme la première pop-up
+          setIsSuccessModalVisible(true); // on ouvre la pop-up de succès
+          console.log('Participation confirmée !');
+        }}
+      />
+
+      {/* 5. Pop-up de succès */}
+      <ConfirmationModal
+        isVisible={isSuccessModalVisible}
+        title="🎉 Participation confirmée !"
+        subtitle="Tu es maintenant inscrit à cet événement."
+        onClose={() => setIsSuccessModalVisible(false)}
+        onConfirm={() => setIsSuccessModalVisible(false)}
+      />
     </View>
   );
 };
