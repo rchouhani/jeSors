@@ -10,7 +10,7 @@ const ConfirmationModal = ({
   subtitle,
   details,
   confirmText = 'Confirmer', // Valeur par défaut
-  cancelText = 'Annuler', // Valeur par défaut
+  cancelText, // Sans la valeur "Annuler" (le cancelText est optionnel)
 }: ConfirmationModalProps) => {
   return (
     <Modal
@@ -37,12 +37,19 @@ const ConfirmationModal = ({
 
           {/* Les boutons d'action */}
           <View style={styles.buttonGroup}>
-            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-              <Text style={styles.cancelButtonText}>{cancelText}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.confirmButton} onPress={onConfirm}>
-              <Text style={styles.confirmButtonText}>{confirmText}</Text>
+            {/* On affiche le bouton Annuler SEULEMENT si cancelText est fourni */}
+            {cancelText && (
+              <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+                <Text style={styles.cancelButtonText}>{cancelText}</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              style={[styles.confirmButton, !cancelText && { width: '100%' }]} // Prend toute la largeur s'il est seul
+              onPress={onConfirm}
+            >
+              <Text style={styles.confirmButtonText}>
+                {confirmText || 'OK'}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

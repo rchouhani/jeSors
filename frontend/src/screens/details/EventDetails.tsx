@@ -128,6 +128,8 @@ const EventDetails = ({ route, navigation }: EventDetailsProps) => {
         title="Confirmer ta participation ?"
         subtitle={`${event.title} • ${event.date}`}
         details={event.location}
+        cancelText="Annuler"
+        confirmText="Confirmer"
         onClose={() => setIsModalVisible(false)}
         onConfirm={() => {
           setIsModalVisible(false); // on ferme la première pop-up
@@ -141,8 +143,12 @@ const EventDetails = ({ route, navigation }: EventDetailsProps) => {
         isVisible={isSuccessModalVisible}
         title="🎉 Participation confirmée !"
         subtitle="Tu es maintenant inscrit à cet événement."
+        confirmText="OK"
         onClose={() => setIsSuccessModalVisible(false)}
-        onConfirm={() => setIsSuccessModalVisible(false)}
+        onConfirm={() => {
+          setIsSuccessModalVisible(false); // 1. On ferme la modale
+          navigation.navigate('EventsFeed'); // 2. On redirige l'utilisateur vers l'écran de toutes les sorties !
+        }}
       />
     </View>
   );
