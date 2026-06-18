@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-// On ajoute ({ navigation }: any) pour permettre à l'écran de rediriger l'utilisateur
-const SplashScreen = ({ navigation }: any) => {
+// Importation du typage global de notre application
+import { RootStackParamList } from '../../types/navigation';
+
+// On définit proprement le type des Props du Splash Screen grâce au Stack global
+type Props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
+
+const SplashScreen = ({ navigation }: Props) => {
   useEffect(() => {
     const chrono = setTimeout(() => {
-      // Au bout de 3 secondes, on bascule vers le feed
-      navigation.replace('EventsFeed');
+      // Au bout de 3 secondes, on bascule vers le bloc d'onglets qui contientle feed
+      navigation.replace('MainTabs');
     }, 3000);
 
     return () => clearTimeout(chrono);
@@ -37,8 +43,8 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 200,
-    height: 200,
+    width: 250,
+    height: 250,
     marginBottom: 20,
     resizeMode: 'contain', // Force l'image à s'adapter sans déborder
     backgroundColor: 'transparent',
