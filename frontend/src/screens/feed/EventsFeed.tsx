@@ -11,6 +11,7 @@ import {
 
 import rawEvents from '../../data/events.json';
 
+
 // IMPORT DES TYPES
 import { EventsFeedNavigationProp, EventItem } from '../../types/navigation';
 
@@ -57,6 +58,7 @@ const EventsFeed = ({ navigation }: EventsFeedProps) => {
         onPress={() => navigation.navigate('EventDetails', { event: item })}
         // onPress={() => console.log('👉 CLIC SUR LA CARTE :', item.title)}
       >
+
         <Image source={{ uri: item.image }} style={styles.cardImage} />
 
         <View style={styles.cardContent}>
@@ -71,6 +73,7 @@ const EventsFeed = ({ navigation }: EventsFeedProps) => {
             👥 {item.participants} / {item.maxParticipants} participants
           </Text>
         </View>
+
       </TouchableOpacity>
     );
   };

@@ -11,3 +11,10 @@ export interface ConfirmationModalProps {
   confirmText?: string; // Optionnel
   cancelText?: string; // Optionnel
 }
+
+export interface InputProps {
+    label: string;
+    placeholder: string;
+    icon?: string | React.ReactNode
+    style?: string;
+    }
