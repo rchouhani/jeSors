@@ -46,6 +46,7 @@ const EventDetails = ({ route, navigation }: EventDetailsProps) => {
         backgroundColor="transparent"
       />
 
+
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         {/* 1. Image Header (Prend une grande partie du haut de l'écran) */}
         <View style={styles.imageContainer}>

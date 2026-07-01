@@ -3,7 +3,7 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// Importation stricte du typage global
+// Importation du typage global
 import { RootStackParamList } from './src/types/navigation';
 
 // Importation des composants d'écrans et de la navigation

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Importation de la liste des onglets officiels
 import { RootTabParamList } from '../types/navigation';
@@ -39,16 +40,33 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 export default function TabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: '#000000', // Noir pour l'onglet actif (comme sur ton image)
-        tabBarInactiveTintColor: '#8E8E93', // Gris pour les onglets inactifs
+      screenOptions={({ route }) => ({
+        tabBarActiveTintColor: '#000000',
+        tabBarInactiveTintColor: '#8E8E93',
         headerShown: false,
-      }}
+
+        // Configuration dynamique des icônes
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName = 'list';
+
+          if (route.name === 'Feed') {
+            iconName = focused ? 'list' : 'list-outline';
+          } else if (route.name === 'Carte') {
+            iconName = focused ? 'map' : 'map-outline';
+          } else if (route.name === 'Favoris') {
+            iconName = focused ? 'heart' : 'heart-outline';
+          } else if (route.name === 'Profil') {
+            iconName = focused ? 'person' : 'person-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
     >
       <Tab.Screen
         name="Feed"
         component={EventsFeed}
-        options={{ title: 'Feed' }}
+        options={{ title: 'Sorties' }}
       />
       <Tab.Screen
         name="Carte"
