@@ -21,7 +21,9 @@ const SplashScreen = ({ navigation }: any) => {
 
       <Text style={styles.title}>Je Sors !</Text>
 
-      <Text style={styles.subtitle}>Trouve des sorties autour de toi</Text>
+      <Text style={styles.subtitle}>
+        Trouve des sorties autour de toi. On se lance !
+      </Text>
     </View>
   );
 };
