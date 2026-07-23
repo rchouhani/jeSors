@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import rawEvents from '../../data/events.json';
-
+import { useFavorites } from '../../context/FavoritesContext';
 
 // IMPORT DES TYPES
 import { EventsFeedNavigationProp, EventItem } from '../../types/navigation';
@@ -38,6 +38,9 @@ const EventsFeed = ({ navigation }: EventsFeedProps) => {
   const [events] = useState<EventItem[]>(DATA_EVENTS);
   const [selectedCategory, setSelectedCategory] = useState('tous');
 
+  // Récupération des fonctions du gestionnaire de favoris
+  const { toggleFavorite, isFavorite } = useFavorites();
+
   // La logique qui trie le JSON selon le bouton cliqué
   const filteredEvents =
     selectedCategory === 'tous'
@@ -47,6 +50,8 @@ const EventsFeed = ({ navigation }: EventsFeedProps) => {
   // TYPAGE ICI : On indique à TypeScript que 'item' respecte l'interface EventItem
   const renderEventCard = ({ item }: { item: EventItem }) => {
     const categoryColor = CATEGORY_COLORS[item.category] || '#7A7A7A';
+    // Vérification si cet événement précis est actuellement en favori
+    const isItemFavorite = isFavorite(item.id);
 
     {
       /* 1er return : On rend la carte cliquable pour naviguer vers les détails de lévénement, en passant l'objet 'item' complet en paramètre */
@@ -58,8 +63,16 @@ const EventsFeed = ({ navigation }: EventsFeedProps) => {
         onPress={() => navigation.navigate('EventDetails', { event: item })}
         // onPress={() => console.log('👉 CLIC SUR LA CARTE :', item.title)}
       >
-
         <Image source={{ uri: item.image }} style={styles.cardImage} />
+
+        {/* BOUTON CŒUR POUR LES FAVORIS */}
+        <TouchableOpacity
+          style={styles.heartButton}
+          onPress={() => toggleFavorite(item.id)}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.heartIcon}>{isItemFavorite ? '❤️' : '🤍'}</Text>
+        </TouchableOpacity>
 
         <View style={styles.cardContent}>
           <View style={[styles.badge, { backgroundColor: categoryColor }]}>
@@ -73,7 +86,6 @@ const EventsFeed = ({ navigation }: EventsFeedProps) => {
             👥 {item.participants} / {item.maxParticipants} participants
           </Text>
         </View>
-
       </TouchableOpacity>
     );
   };
@@ -153,6 +165,21 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
   },
   cardImage: { width: '100%', height: 180 },
+  // NOUVEAUX STYLES POUR LE BOUTON CŒUR
+  heartButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 20,
+    padding: 8,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  heartIcon: { fontSize: 18 },
   cardContent: { padding: 15 },
   badge: {
     alignSelf: 'flex-start',

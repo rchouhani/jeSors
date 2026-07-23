@@ -6,8 +6,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Importation de la liste des onglets officiels
 import { RootTabParamList } from '../types/navigation';
 
-// Importation de l'écran EventsFeed existant
+// Importation des écrans EventsFeed & Favorites
 import EventsFeed from '../screens/feed/EventsFeed';
+import Favorites from '../screens/favorite/Favorites';
 
 // --- ÉCRANS TEMPORAIRES (En attendant de créer les fichiers d'écrans) ---
 function CarteScreen() {
@@ -53,7 +54,7 @@ export default function TabNavigator() {
             iconName = focused ? 'list' : 'list-outline';
           } else if (route.name === 'Carte') {
             iconName = focused ? 'map' : 'map-outline';
-          } else if (route.name === 'Favoris') {
+          } else if (route.name === 'Favorites') {
             iconName = focused ? 'heart' : 'heart-outline';
           } else if (route.name === 'Profil') {
             iconName = focused ? 'person' : 'person-outline';
@@ -74,8 +75,8 @@ export default function TabNavigator() {
         options={{ title: 'Carte' }}
       />
       <Tab.Screen
-        name="Favoris"
-        component={FavorisScreen}
+        name="Favorites"
+        component={Favorites}
         options={{ title: 'Favoris' }}
       />
       <Tab.Screen

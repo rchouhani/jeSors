@@ -35,6 +35,6 @@ export type EventsFeedNavigationProp = NativeStackNavigationProp<
 export type RootTabParamList = {
   Feed: undefined;
   Carte: undefined;
-  Favoris: undefined;
+  Favorites: undefined;
   Profil: undefined;
 };
