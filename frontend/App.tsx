@@ -15,7 +15,7 @@ import EventDetails from './src/screens/details/EventDetails';
 import { FavoritesProvider } from './src/context/FavoritesContext';
 import { UserEventsProvider } from './src/context/UserEventsContext';
 
-// On applique le typage RootStackParamList au Stack Navigator
+// Application du typage RootStackParamList au Stack Navigator
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
