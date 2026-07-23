@@ -10,23 +10,13 @@ import {
 } from 'react-native';
 
 import rawEvents from '../../data/events.json';
-
+import { CATEGORY_COLORS, CATEGORY_TEXT_COLORS } from '../../theme/colors';
 
 // IMPORT DES TYPES
 import { EventsFeedNavigationProp, EventItem } from '../../types/navigation';
 
-// Ici, on type proprement notre constante globale, TypeScript valide le JSON d'un coup !
+// Ici, on type proprement notre constante globale : TypeScript valide le JSON
 const DATA_EVENTS: EventItem[] = rawEvents;
-
-// Badges catégories par couleurs
-const CATEGORY_COLORS: { [key: string]: string } = {
-  Bar: '#FF9500',
-  Concert: '#007AFF',
-  Expo: '#FFCC00',
-  Balade: '#AF52DE',
-  Atelier: '#FF2D55',
-  Sport: '#28A745',
-};
 
 // Typage strict de l'objet de propriétés (Props) attendu par le composant
 interface EventsFeedProps {
@@ -38,7 +28,7 @@ const EventsFeed = ({ navigation }: EventsFeedProps) => {
   const [events] = useState<EventItem[]>(DATA_EVENTS);
   const [selectedCategory, setSelectedCategory] = useState('tous');
 
-  // La logique qui trie le JSON selon le bouton cliqué
+  // La logique qui filtre le JSON selon le bouton "catégorie" cliqué
   const filteredEvents =
     selectedCategory === 'tous'
       ? events
@@ -46,8 +36,9 @@ const EventsFeed = ({ navigation }: EventsFeedProps) => {
 
   // TYPAGE ICI : On indique à TypeScript que 'item' respecte l'interface EventItem
   const renderEventCard = ({ item }: { item: EventItem }) => {
-    const categoryColor = CATEGORY_COLORS[item.category] || '#7A7A7A';
-
+    // Couleurs des badges (background et texte)
+    const badgeBg = CATEGORY_COLORS[item.category] || '#7A7A7A';
+    const badgeColor = CATEGORY_TEXT_COLORS[item.category] || '#FFFFFF';
     {
       /* 1er return : On rend la carte cliquable pour naviguer vers les détails de lévénement, en passant l'objet 'item' complet en paramètre */
     }
@@ -58,12 +49,13 @@ const EventsFeed = ({ navigation }: EventsFeedProps) => {
         onPress={() => navigation.navigate('EventDetails', { event: item })}
         // onPress={() => console.log('👉 CLIC SUR LA CARTE :', item.title)}
       >
-
         <Image source={{ uri: item.image }} style={styles.cardImage} />
 
         <View style={styles.cardContent}>
-          <View style={[styles.badge, { backgroundColor: categoryColor }]}>
-            <Text style={styles.badgeText}>{item.category}</Text>
+          <View style={[styles.badge, { backgroundColor: badgeBg }]}>
+            <Text style={[styles.badgeText, { color: badgeColor }]}>
+              {item.category}
+            </Text>
           </View>
 
           <Text style={styles.cardTitle}>{item.title}</Text>
@@ -73,7 +65,6 @@ const EventsFeed = ({ navigation }: EventsFeedProps) => {
             👥 {item.participants} / {item.maxParticipants} participants
           </Text>
         </View>
-
       </TouchableOpacity>
     );
   };
