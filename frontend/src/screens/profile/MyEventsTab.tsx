@@ -7,15 +7,16 @@ import {
   FlatList,
   Image,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-// Importation des données de sorties et des typages
+// Importation des données de sorties, des couleurs et des typages
 import rawEvents from '../../data/events.json';
-import { EventItem } from '../../types/navigation';
+import { EventItem, MyEventsProps } from '../../types/navigation';
 import { useUserEvents } from '../../context/UserEventsContext';
 import { CATEGORY_COLORS, CATEGORY_TEXT_COLORS } from '../../theme/colors';
 const DATA_EVENTS: EventItem[] = rawEvents;
 
-export const MyEventsTab = () => {
+export const MyEventsTab = ({ navigation }: MyEventsProps) => {
   // État local pour le sous-filtre ('a_venir' ou 'passees')
   const [subFilter, setSubFilter] = useState<'a_venir' | 'passees'>('a_venir');
 
@@ -68,65 +69,120 @@ export const MyEventsTab = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      {/* 1. Sous-filtres (À venir / Passées) */}
-      <View style={styles.subFilterContainer}>
-        <TouchableOpacity
-          style={[
-            styles.subFilterBtn,
-            subFilter === 'a_venir' && styles.activeSubFilterBtn,
-          ]}
-          onPress={() => setSubFilter('a_venir')}
-        >
-          <Text
-            style={[
-              styles.subFilterText,
-              subFilter === 'a_venir' && styles.activeSubFilterText,
-            ]}
+    <SafeAreaView style={styles.safeArea}>
+      <View style={{ flex: 1 }}>
+        {/* EN-TÊTE AVEC BOUTON RETOUR (Même style exact que EventDetails) */}
+        <View style={styles.headerRow}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              } else {
+                navigation.navigate('Feed');
+              }
+            }}
+            activeOpacity={0.7}
           >
-            À venir
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[
-            styles.subFilterBtn,
-            subFilter === 'passees' && styles.activeSubFilterBtn,
-          ]}
-          onPress={() => setSubFilter('passees')}
-        >
-          <Text
-            style={[
-              styles.subFilterText,
-              subFilter === 'passees' && styles.activeSubFilterText,
-            ]}
-          >
-            Passées
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* 2. Affichage de la liste ou message d'absence de sorties */}
-      {myEvents.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>
-            Vous n'êtes inscrit à aucune sortie pour le moment.
-          </Text>
+            <Text style={styles.backText}>←</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Mes Sorties</Text>
         </View>
-      ) : (
-        <FlatList
-          data={myEvents}
-          keyExtractor={item => item.id}
-          contentContainerStyle={styles.listContainer}
-          showsVerticalScrollIndicator={false}
-          renderItem={renderMyEventCard}
-        />
-      )}
-    </View>
+
+        {/* 1. Sous-filtres (À venir / Passées) */}
+        <View style={styles.subFilterContainer}>
+          <TouchableOpacity
+            style={[
+              styles.subFilterBtn,
+              subFilter === 'a_venir' && styles.activeSubFilterBtn,
+            ]}
+            onPress={() => setSubFilter('a_venir')}
+          >
+            <Text
+              style={[
+                styles.subFilterText,
+                subFilter === 'a_venir' && styles.activeSubFilterText,
+              ]}
+            >
+              À venir
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.subFilterBtn,
+              subFilter === 'passees' && styles.activeSubFilterBtn,
+            ]}
+            onPress={() => setSubFilter('passees')}
+          >
+            <Text
+              style={[
+                styles.subFilterText,
+                subFilter === 'passees' && styles.activeSubFilterText,
+              ]}
+            >
+              Passées
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* 2. Affichage de la liste ou message d'absence de sorties */}
+        {myEvents.length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>
+              Vous n'êtes inscrit à aucune sortie pour le moment.
+            </Text>
+          </View>
+        ) : (
+          <FlatList
+            data={myEvents}
+            keyExtractor={item => item.id}
+            contentContainerStyle={styles.listContainer}
+            showsVerticalScrollIndicator={false}
+            renderItem={renderMyEventCard}
+          />
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#FAFAFA',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 15,
+  },
+  backButton: {
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+    marginRight: 15,
+  },
+  backText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+  },
   // Boutons des sous-filtres
   subFilterContainer: {
     flexDirection: 'row',
@@ -194,3 +250,5 @@ const styles = StyleSheet.create({
   },
   emptyText: { color: '#7A7A7A', textAlign: 'center', fontSize: 15 },
 });
+
+export default MyEventsTab;

@@ -6,9 +6,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Importation de la liste des onglets officiels
 import { RootTabParamList } from '../types/navigation';
 
-// Importation des écrans EventsFeed & Favorites
+// Importation des écrans EventsFeed, Favorites & MyEvents
 import EventsFeed from '../screens/feed/EventsFeed';
 import Favorites from '../screens/favorite/Favorites';
+import MyEventsTab from '../screens/profile/MyEventsTab';
 
 // --- ÉCRANS TEMPORAIRES (En attendant de créer les fichiers d'écrans) ---
 function CarteScreen() {
@@ -81,8 +82,10 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Profil"
-        component={ProfilScreen}
-        options={{ title: 'Profil' }}
+        component={MyEventsTab} // redirection temporaire vers MyEvents en attendant de code MyProfile
+        options={{
+          title: 'Profil',
+        }}
       />
     </Tab.Navigator>
   );
