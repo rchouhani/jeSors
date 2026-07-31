@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ConfirmationModal from '../../components/ConfirmationModal';
+import { CATEGORY_COLORS, CATEGORY_TEXT_COLORS } from '../../theme/colors';
 
 // On importe nos types globaux depuis le dossier partagé
 import { RootStackParamList } from '../../types/navigation';
@@ -20,23 +21,14 @@ type EventDetailsProps = NativeStackScreenProps<
   'EventDetails'
 >;
 
-// Dictionnaire de couleurs pour les catégories (cohérent avec le flux)
-const CATEGORY_COLORS: { [key: string]: string } = {
-  Bar: '#FF9500',
-  Concert: '#007AFF',
-  Expo: '#FFCC00',
-  Balade: '#AF52DE',
-  Atelier: '#FF2D55',
-  Sport: '#28A745',
-};
-
 const EventDetails = ({ route, navigation }: EventDetailsProps) => {
   // mettre toujours les hooks d'état en haut du composant
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
 
   const { event } = route.params;
-  const categoryColor = CATEGORY_COLORS[event.category] || '#7A7A7A';
+  const badgeBg = CATEGORY_COLORS[event.category] || '#7A7A7A';
+  const badgeColor = CATEGORY_TEXT_COLORS[event.category] || '#FFFFFF';
 
   return (
     <View style={styles.mainContainer}>
@@ -45,7 +37,6 @@ const EventDetails = ({ route, navigation }: EventDetailsProps) => {
         translucent
         backgroundColor="transparent"
       />
-
 
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         {/* 1. Image Header (Prend une grande partie du haut de l'écran) */}
@@ -64,10 +55,10 @@ const EventDetails = ({ route, navigation }: EventDetailsProps) => {
         {/* 2. Conteneur de contenu (qui remonte légèrement sur l'image avec un arrondi) */}
         <View style={styles.contentContainer}>
           {/* Badge Catégorie */}
-          <View
-            style={[styles.categoryBadge, { backgroundColor: categoryColor }]}
-          >
-            <Text style={styles.categoryText}>{event.category}</Text>
+          <View style={[styles.categoryBadge, { backgroundColor: badgeBg }]}>
+            <Text style={[styles.categoryText, { color: badgeColor }]}>
+              {event.category}
+            </Text>
           </View>
 
           {/* Titre principal */}

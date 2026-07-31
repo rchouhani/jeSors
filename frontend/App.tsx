@@ -11,28 +11,40 @@ import SplashScreen from './src/screens/splash/Splash';
 import TabNavigator from './src/navigation/TabNavigator';
 import EventDetails from './src/screens/details/EventDetails';
 
-// On applique le typage RootStackParamList au Stack Navigator
+// Importation des deux gestionnaires d'état globaux (Contexts)
+import { FavoritesProvider } from './src/context/FavoritesContext';
+import { UserEventsProvider } from './src/context/UserEventsContext';
+
+// Application du typage RootStackParamList au Stack Navigator
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <StatusBar barStyle="dark-content" backgroundColor="#FAFAFA" />
+    /* 
+      1. FavoritesProvider : Rend la liste des favoris accessible dans toute l'application.
+      2. UserEventsProvider : Rend la liste des sorties auxquelles l'utilisateur est inscrit accessible partout.
+    */
+    <FavoritesProvider>
+      <UserEventsProvider>
+        <NavigationContainer>
+          <StatusBar barStyle="dark-content" backgroundColor="#FAFAFA" />
 
-      <Stack.Navigator
-        initialRouteName="Splash"
-        screenOptions={{ headerShown: false }}
-      >
-        {/* Écran 1 : Le Splash Screen autonome */}
-        <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Navigator
+            initialRouteName="Splash"
+            screenOptions={{ headerShown: false }}
+          >
+            {/* Écran 1 : Splash Screen au démarrage */}
+            <Stack.Screen name="Splash" component={SplashScreen} />
 
-        {/* Écran 2 : La barre d'onglets (contenant Feed, Carte, Favoris, Profil) */}
-        <Stack.Screen name="MainTabs" component={TabNavigator} />
+            {/* Écran 2 : La barre d'onglets principale (Feed, Carte, Favoris, Profil) */}
+            <Stack.Screen name="MainTabs" component={TabNavigator} />
 
-        {/* Écran 3 : Les détails (qui s'ouvriront par-dessus les onglets) */}
-        <Stack.Screen name="EventDetails" component={EventDetails} />
-      </Stack.Navigator>
-    </NavigationContainer>
+            {/* Écran 3 : La page de détails d'une sortie */}
+            <Stack.Screen name="EventDetails" component={EventDetails} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserEventsProvider>
+    </FavoritesProvider>
   );
 };
 
