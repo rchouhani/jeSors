@@ -12,9 +12,18 @@ export interface ConfirmationModalProps {
   cancelText?: string; // Optionnel
 }
 
-export interface InputProps {
+export interface InputCompProps {
     label: string;
     placeholder: string;
-    icon?: string | React.ReactNode
+    icon?: string | React.ReactNode;
     style?: string;
+    labelStyle?: string;
+    }
+
+export interface ButtonCompProps {
+    label: string;
+    style?: string;
+    onPress?: string;
+    icon?: string;
+    redirectionRoute?: string;
     }

@@ -10,6 +10,8 @@ import { RootStackParamList } from './src/types/navigation';
 import SplashScreen from './src/screens/splash/Splash';
 import TabNavigator from './src/navigation/TabNavigator';
 import EventDetails from './src/screens/details/EventDetails';
+import LoginScreen from './src/screens/login/LoginScreen';
+import AuthScreen from './src/screens/register/AuthScreen';
 
 // On applique le typage RootStackParamList au Stack Navigator
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -20,7 +22,7 @@ const App = () => {
       <StatusBar barStyle="dark-content" backgroundColor="#FAFAFA" />
 
       <Stack.Navigator
-        initialRouteName="Splash"
+        initialRouteName="Register"
         screenOptions={{ headerShown: false }}
       >
         {/* Écran 1 : Le Splash Screen autonome */}
@@ -31,6 +33,13 @@ const App = () => {
 
         {/* Écran 3 : Les détails (qui s'ouvriront par-dessus les onglets) */}
         <Stack.Screen name="EventDetails" component={EventDetails} />
+
+        {/* Écran 4 : Ecran de Login non utilisé pour le moment, voir si utile */}
+        <Stack.Screen name="Login" component={LoginScreen} />
+
+        {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
+        <Stack.Screen name='Register' component={AuthScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
