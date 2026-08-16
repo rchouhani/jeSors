@@ -24,6 +24,8 @@ export type RootStackParamList = {
 
   // Grâce à EventItem, l'écran de détail sait exactement quelle structure de données il va recevoir
   EventDetails: { event: EventItem };
+  Login: undefined;
+  Register: undefined;
 };
 
 // 3. Type réutilisable pour la navigation depuis le Flux (Feed)

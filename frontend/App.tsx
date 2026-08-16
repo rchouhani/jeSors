@@ -30,7 +30,6 @@ const App = () => {
       <UserEventsProvider>
         <NavigationContainer>
           <StatusBar barStyle="dark-content" backgroundColor="#FAFAFA" />
-
           <Stack.Navigator
             initialRouteName="Splash"
             screenOptions={{ headerShown: false }}
@@ -41,18 +40,16 @@ const App = () => {
             {/* Écran 2 : La barre d'onglets principale (Feed, Carte, Favoris, Profil) */}
             <Stack.Screen name="MainTabs" component={TabNavigator} />
 
-        {/* Écran 3 : Les détails (qui s'ouvriront par-dessus les onglets) */}
-        <Stack.Screen name="EventDetails" component={EventDetails} />
-
-        {/* Écran 4 : Ecran de Login non utilisé pour le moment, voir si utile */}
-        <Stack.Screen name="Login" component={LoginScreen} />
-
-        {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
-        <Stack.Screen name='Register' component={AuthScreen} />
-
-            {/* Écran 3 : La page de détails d'une sortie */}
+            {/* Écran 3 : Les détails (qui s'ouvriront par-dessus les onglets) */}
             <Stack.Screen name="EventDetails" component={EventDetails} />
+
+            {/* Écran 4 : Ecran de Login non utilisé pour le moment, voir si utile */}
+            <Stack.Screen name="Login" component={LoginScreen} />
+
+            {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
+            <Stack.Screen name="Register" component={AuthScreen} />
           </Stack.Navigator>
+          ’
         </NavigationContainer>
       </UserEventsProvider>
     </FavoritesProvider>
