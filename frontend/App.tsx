@@ -49,7 +49,6 @@ const App = () => {
             {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
             <Stack.Screen name="Register" component={AuthScreen} />
           </Stack.Navigator>
-          ’
         </NavigationContainer>
       </UserEventsProvider>
     </FavoritesProvider>
