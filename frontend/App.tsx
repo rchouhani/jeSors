@@ -12,6 +12,7 @@ import TabNavigator from './src/navigation/TabNavigator';
 import EventDetails from './src/screens/details/EventDetails';
 import LoginScreen from './src/screens/login/LoginScreen';
 import AuthScreen from './src/screens/register/AuthScreen';
+import RegisterTwoScreen from './src/screens/registertwo/RegisterTwo';
 
 // Importation des deux gestionnaires d'état globaux (Contexts)
 import { FavoritesProvider } from './src/context/FavoritesContext';
@@ -41,17 +42,17 @@ const App = () => {
             {/* Écran 2 : La barre d'onglets principale (Feed, Carte, Favoris, Profil) */}
             <Stack.Screen name="MainTabs" component={TabNavigator} />
 
-        {/* Écran 3 : Les détails (qui s'ouvriront par-dessus les onglets) */}
-        <Stack.Screen name="EventDetails" component={EventDetails} />
-
-        {/* Écran 4 : Ecran de Login non utilisé pour le moment, voir si utile */}
-        <Stack.Screen name="Login" component={LoginScreen} />
-
-        {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
-        <Stack.Screen name='Register' component={AuthScreen} />
-
-            {/* Écran 3 : La page de détails d'une sortie */}
+            {/* Écran 3 : Les détails (qui s'ouvriront par-dessus les onglets) */}
             <Stack.Screen name="EventDetails" component={EventDetails} />
+
+            {/* Écran 4 : Ecran de Login non utilisé pour le moment, voir si utile */}
+            <Stack.Screen name="Login" component={LoginScreen} />
+
+            {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
+            <Stack.Screen name='Register' component={AuthScreen} />
+
+            {/* Ecran 2 enregistrement: Etape 2 avec la photo de profil ainsi que les détails du compte */}
+            <Stack.Screen name='RegisterTwo' component={RegisterTwoScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </UserEventsProvider>
