@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import InputComp from '../../components/Input';
 import ButtonComp from '../../components/Button';
 
-const AuthScreen = ({ navigation }: any) => {
+const AuthScreen = () => {
+    const navigation = useNavigation();
     const [isLogin, setIsLogin] = useState(true);
 
     return(
@@ -16,15 +18,21 @@ const AuthScreen = ({ navigation }: any) => {
             {isLogin && (
                 <InputComp label='Confirmer le mot de passe' placeholder='Confirmer'/>
             )}
-            <ButtonComp title={isLogin ? 'S\'enregistrer' : 'Se connecter'} />
+            <ButtonComp
+                title={isLogin ? 'Suivant' : 'Se connecter'}
+                onPress={() => isLogin
+                    ? navigation.navigate('RegisterTwo')
+                    : navigation.navigate('Login')
+                }
+            />
             <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
                 <Text style={styles.switchText}>
                     {isLogin ? "Déjà un compte ? Se connecter" : "Pas encore de compte ? S'inscrire"}
                 </Text>
             </TouchableOpacity>
         </View>
-        );
-    };
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -32,7 +40,7 @@ const styles = StyleSheet.create({
         padding: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        },
+    },
     titleText: {
         color: 'steelblue',
         fontSize: 40,
