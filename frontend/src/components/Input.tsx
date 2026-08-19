@@ -8,12 +8,13 @@ const InputComp = ({
   icon,
   style,
   labelStyle,
+  placeholderStyle
 }: InputCompProps) => {
 return (
   <View style={styles.wrapper}>
     {label && <Text style={[styles.labelInput, labelStyle]}>{label}</Text>}
     <View style={[styles.container, style]}>
-      <TextInput placeholder={placeholder} />
+      <TextInput style={placeholderStyle} placeholder={placeholder} />
       {icon && icon}
     </View>
   </View>
