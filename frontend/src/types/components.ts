@@ -13,11 +13,12 @@ export interface ConfirmationModalProps {
 }
 
 export interface InputCompProps {
-    label: string;
+    label: string | React.ReactNode;
     placeholder: string;
     icon?: string | React.ReactNode;
     style?: string;
     labelStyle?: string;
+    placeholderStyle?: string;
     }
 
 export interface ButtonCompProps {
