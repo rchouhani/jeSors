@@ -1,22 +1,56 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import InputComp from '../../components/Input';
 import ButtonComp from '../../components/Button';
+import ProgressBar from '../../components/ProgressBar';
+import { useRegister } from '../../context/RegisterContext';
 
 const AuthScreen = () => {
     const navigation = useNavigation();
+    const { setProgress } = useRegister();
     const [isLogin, setIsLogin] = useState(true);
+    const [pseudo, setPseudo] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirm, setConfirm] = useState('');
+    const [inputValue, setInputValue ] = useState('');
+
+    useEffect(() => {
+         if (!isLogin) return;
+        const filled = [pseudo, password, confirm].filter(v => v.length > 0).length;
+        setProgress((filled / 3) * 50);
+    }, [pseudo, password, confirm, isLogin]);
 
     return(
         <View style={styles.container}>
+        <ProgressBar />
             <Text style={styles.titleText}>
                 {isLogin ? 'Inscription' : 'Connexion'}
             </Text>
-            <InputComp label='Pseudo' placeholder='Pseudo' />
-            <InputComp label='Mot de Passe' placeholder='Mot de Passe'/>
+            <InputComp
+                label='pseudo'
+                placeholder='Pseudo'
+                value={pseudo}
+                onChangeText={setPseudo}
+                keyboardType='email-address'
+            />
+            <InputComp
+                label='Mot Passe'
+                placeholder='Mot de Passe'
+                value={password}
+                onChangeText={setPassword}
+                keyboardType='default'
+                secureTextEntry={true}
+            />
             {isLogin && (
-                <InputComp label='Confirmer le mot de passe' placeholder='Confirmer'/>
+                <InputComp
+                    label='Confirmer le mot de passe'
+                    placeholder='Confirmer'
+                    value={confirm}
+                    onChangeText={setConfirm}
+                    keyboardType='default'
+                    secureTextEntry={true}
+                />
             )}
             <ButtonComp
                 title={isLogin ? 'Suivant' : 'Se connecter'}
