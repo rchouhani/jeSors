@@ -17,6 +17,7 @@ import RegisterTwoScreen from './src/screens/registertwo/RegisterTwo';
 // Importation des deux gestionnaires d'état globaux (Contexts)
 import { FavoritesProvider } from './src/context/FavoritesContext';
 import { UserEventsProvider } from './src/context/UserEventsContext';
+import { RegisterProvider } from './src/context/RegisterContext';
 
 // Application du typage RootStackParamList au Stack Navigator
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -30,10 +31,12 @@ const App = () => {
     <FavoritesProvider>
       <UserEventsProvider>
         <NavigationContainer>
+            <RegisterProvider>
+
           <StatusBar barStyle="dark-content" backgroundColor="#FAFAFA" />
 
           <Stack.Navigator
-            initialRouteName="Splash"
+            initialRouteName="Register"
             screenOptions={{ headerShown: false }}
           >
             {/* Écran 1 : Splash Screen au démarrage */}
@@ -44,16 +47,13 @@ const App = () => {
 
             {/* Écran 3 : Les détails (qui s'ouvriront par-dessus les onglets) */}
             <Stack.Screen name="EventDetails" component={EventDetails} />
+                {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
+                <Stack.Screen name='Register' component={AuthScreen} />
 
-            {/* Écran 4 : Ecran de Login non utilisé pour le moment, voir si utile */}
-            <Stack.Screen name="Login" component={LoginScreen} />
-
-            {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
-            <Stack.Screen name='Register' component={AuthScreen} />
-
-            {/* Ecran 2 enregistrement: Etape 2 avec la photo de profil ainsi que les détails du compte */}
-            <Stack.Screen name='RegisterTwo' component={RegisterTwoScreen} />
+                {/* Ecran 2 enregistrement: Etape 2 avec la photo de profil ainsi que les détails du compte */}
+                <Stack.Screen name='RegisterTwo' component={RegisterTwoScreen} />
           </Stack.Navigator>
+            </RegisterProvider>
         </NavigationContainer>
       </UserEventsProvider>
     </FavoritesProvider>
