@@ -1,3 +1,5 @@
+import { KeyboardTypeOptions } from 'react-native';
+
 // src/types/components.ts
 // On définit les Props pour rendre la pop-up personnalisable
 
@@ -15,6 +17,10 @@ export interface ConfirmationModalProps {
 export interface InputCompProps {
     label: string | React.ReactNode;
     placeholder: string;
+    value?: string;
+    onChangeText: (text: string) => void;
+    keyboardType?: KeyboardTypeOptions;
+    secureTextEntry?: boolean;
     icon?: string | React.ReactNode;
     style?: string;
     labelStyle?: string;
