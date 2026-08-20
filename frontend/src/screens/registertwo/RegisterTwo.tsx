@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView  } from 'react-native';
 import InputComp from '../../components/Input';
 import FAB from '../../components/FAB';
+import ProgressBar from '../../components/ProgressBar';
+import { useRegister } from '../../context/RegisterContext';
 
 
 const RegisterTwoScreen = ({ navigation }: any) => {
+    const { setProgress } = useRegister();
     const [photo, setPhoto] = useState<string | null>(null);
+    const [city, setCity] = useState('');
+    const [bio, setBio] = useState('');
+
+    useEffect(() => {
+        const filled = [city, bio].filter(v => v && v.length > 0).length;
+        setProgress(50 + (filled / 2) * 50);
+    }, [city, bio]);
 
     return (
         <>
         <SafeAreaView style={{ flex: 1, padding: 20, alignItems: 'center', justifyContent: 'center' }}>
+        <ProgressBar />
         <InputComp
             style={{
                 position: 'relative',
@@ -25,7 +36,7 @@ const RegisterTwoScreen = ({ navigation }: any) => {
             label={
                 <>
                     <Text>Ton profil</Text>
-                    <Text style={{ fontStyle: 'bold', color: 'grey', fontSize: 12 }}>
+                    <Text style={{ fontWeight: 'bold', color: 'grey', fontSize: 12 }}>
                         {'\n'}Les autres participants le verront ainsi
                     </Text>
                 </>
@@ -38,12 +49,17 @@ const RegisterTwoScreen = ({ navigation }: any) => {
         </View>
         <Text style={{ marginTop: -50 }}>Optionnel</Text>
         <InputComp
-        label='Ville'
-        placeholder='Ville' />
+            label='Ville'
+            placeholder='Ville'
+            value={city}
+            onChangeText={setCity}
+         />
         <InputComp
             label='Bio'
             placeholder='Raconte-nous qui tu es'
             style={{ height: 150 }}
+            value={bio}
+            onChangeText={setBio}
         />
         </SafeAreaView>
         </>
