@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import InputComp from '../../components/Input';
 import ButtonComp from '../../components/Button';
 import ProgressBar from '../../components/ProgressBar';
 import { useRegister } from '../../context/RegisterContext';
 
+type AuthNavigationParamList = {
+    RegisterTwo: undefined;
+    Login: undefined;
+};
+
 const AuthScreen = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<NavigationProp<AuthNavigationParamList>>();
     const { setProgress } = useRegister();
     const [isLogin, setIsLogin] = useState(true);
     const [pseudo, setPseudo] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
-    const [inputValue, setInputValue ] = useState('');
 
     useEffect(() => {
          if (!isLogin) return;
@@ -28,8 +32,8 @@ const AuthScreen = () => {
                 {isLogin ? 'Inscription' : 'Connexion'}
             </Text>
             <InputComp
-                label='pseudo'
-                placeholder='Pseudo'
+                label='E-mail'
+                placeholder='user@mail.fr'
                 value={pseudo}
                 onChangeText={setPseudo}
                 keyboardType='email-address'
@@ -45,7 +49,7 @@ const AuthScreen = () => {
             {isLogin && (
                 <InputComp
                     label='Confirmer le mot de passe'
-                    placeholder='Confirmer'
+                    placeholder='Confirmer le mot de passe'
                     value={confirm}
                     onChangeText={setConfirm}
                     keyboardType='default'
