@@ -1,4 +1,4 @@
-import { KeyboardTypeOptions, StyleProp, ViewStyle } from 'react-native';
+import { KeyboardTypeOptions } from 'react-native';
 
 // src/types/components.ts
 // On définit les Props pour rendre la pop-up personnalisable
