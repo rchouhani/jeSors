@@ -1,4 +1,4 @@
-import { KeyboardTypeOptions } from 'react-native';
+import { KeyboardTypeOptions, StyleProp, ViewStyle } from 'react-native';
 
 // src/types/components.ts
 // On définit les Props pour rendre la pop-up personnalisable
@@ -18,19 +18,19 @@ export interface InputCompProps {
     label: string | React.ReactNode;
     placeholder: string;
     value?: string;
-    onChangeText: (text: string) => void;
+    onChangeText?: (text: string) => void;
     keyboardType?: KeyboardTypeOptions;
     secureTextEntry?: boolean;
     icon?: string | React.ReactNode;
-    style?: string;
-    labelStyle?: string;
+    style?: object;
+    labelStyle?: object;
     placeholderStyle?: string;
     }
 
 export interface ButtonCompProps {
-    label: string;
+    title: string;
     style?: string;
-    onPress?: string;
+    onPress?: object;
     icon?: string;
     redirectionRoute?: string;
     }
