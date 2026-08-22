@@ -13,8 +13,8 @@ type AuthNavigationParamList = {
 
 const AuthScreen = () => {
     const navigation = useNavigation<NavigationProp<AuthNavigationParamList>>();
-    const { setProgress } = useRegister();
-    const [isLogin, setIsLogin] = useState(true);
+    const { setProgress, isLogin, setIsLogin } = useRegister();
+    // const [isLogin, setIsLogin] = useState(true);
     const [pseudo, setPseudo] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
