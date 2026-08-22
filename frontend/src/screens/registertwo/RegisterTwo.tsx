@@ -19,7 +19,7 @@ const RegisterTwoScreen = ({ navigation }: any) => {
 
     return (
         <>
-        <SafeAreaView style={{ flex: 1, padding: 20, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1, padding: 20, alignItems: 'center', justifyContent: 'center' }}>
         <ProgressBar />
         <InputComp
             style={{
@@ -53,6 +53,7 @@ const RegisterTwoScreen = ({ navigation }: any) => {
             placeholder='Ville'
             value={city}
             onChangeText={setCity}
+            keyboardType='default'
          />
         <InputComp
             label='Bio'
@@ -60,8 +61,9 @@ const RegisterTwoScreen = ({ navigation }: any) => {
             style={{ height: 150 }}
             value={bio}
             onChangeText={setBio}
+            keyboardType='default'
         />
-        </SafeAreaView>
+        </View>
         </>
     );
 }
