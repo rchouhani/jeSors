@@ -10,7 +10,6 @@ const InputComp = ({
   icon,
   style,
   labelStyle,
-  placeholderStyle,
   keyboardType,
   secureTextEntry,
 }: InputCompProps) => {
