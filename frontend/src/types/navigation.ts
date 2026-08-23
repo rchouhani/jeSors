@@ -20,12 +20,13 @@ export interface EventItem {
 export type RootStackParamList = {
   Splash: undefined;
   MainTabs: undefined; // L'écran principal qui contient les onglets
-  // EventsFeed: undefined;
+  EventsFeed: undefined;
 
   // Grâce à EventItem, l'écran de détail sait exactement quelle structure de données il va recevoir
   EventDetails: { event: EventItem };
   Login: undefined;
   Register: undefined;
+  RegisterTwo: undefined;
 };
 
 // 3. Type réutilisable pour la navigation depuis le Flux (Feed)
