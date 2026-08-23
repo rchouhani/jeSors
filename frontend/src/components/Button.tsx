@@ -7,7 +7,6 @@ const ButtonComp = ({
   style,
   icon,
   onPress,
-  redirectionRoute,
 }: ButtonCompProps) => {
   return (
     <Pressable
