@@ -4,11 +4,11 @@ import { useRegister } from '../context/RegisterContext';
 
 const ProgressBar = () => {
     const { progress, isLogin } = useRegister();
-    if (!isLogin) return null;
+    if (!isLogin) return null; // si pas isLogin alors la progressBar ne s'affiche pas 
 
     return (
         <View style={styles.container}>
-            {isLogin && <View style={[styles.bar, {width: `${progress}%` }]} /> }
+            {isLogin && <View style={[styles.bar, {width: `${progress}%` }]} /> } {/* à l'inverse si isLogin alors la progressBar s'affiche */}
         </View>
     );
 };

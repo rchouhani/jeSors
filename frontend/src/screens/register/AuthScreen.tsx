@@ -25,12 +25,12 @@ const AuthScreen = () => {
     }, [pseudo, password, confirm, isLogin]);
 
     return(
-    <KeyboardAvoidingView
+    <KeyboardAvoidingView // class native de react native qui permet de ne pas cacher ce qu'il y a sous le clavier
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1}}
     >  
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView contentContainerStyle={styles.container}> 
                 <ProgressBar />
                     <Text style={styles.titleText}>
                         {isLogin ? 'Inscription' : 'Connexion'}

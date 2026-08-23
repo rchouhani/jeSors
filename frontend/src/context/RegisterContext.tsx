@@ -11,7 +11,7 @@ const RegisterContext = createContext<RegisterContextType | null>(null);
 
 export const RegisterProvider = ({ children }: { children: React.ReactNode }) => {
     const [progress, setProgress] = useState(0);
-    const [isLogin, setIsLogin] = useState(true);
+    const [isLogin, setIsLogin] = useState(true); // permet d'importer les variables là où en a besoin (exemple profile uneiquement si connecté)
 
     return (
         <RegisterContext.Provider value={{ progress, setProgress, isLogin, setIsLogin }}>
