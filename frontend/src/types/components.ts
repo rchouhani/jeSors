@@ -1,4 +1,4 @@
-import { KeyboardTypeOptions } from 'react-native';
+import { GestureResponderEvent, KeyboardTypeOptions } from 'react-native';
 
 // src/types/components.ts
 // On définit les Props pour rendre la pop-up personnalisable
@@ -29,8 +29,7 @@ export interface InputCompProps {
 
 export interface ButtonCompProps {
     title: string;
-    style?: string;
-    onPress?: object;
+    style?: object;
+    onPress?: (event: GestureResponderEvent) => void
     icon?: string;
-    redirectionRoute?: string;
-    }
+  }
