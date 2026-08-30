@@ -9,13 +9,15 @@ import { RootStackParamList } from './src/types/navigation';
 // Importation des composants d'écrans et de la navigation
 import SplashScreen from './src/screens/splash/Splash';
 import TabNavigator from './src/navigation/TabNavigator';
+import EventsFeed from './src/screens/feed/EventsFeed';
 import EventDetails from './src/screens/details/EventDetails';
-import LoginScreen from './src/screens/login/LoginScreen';
 import AuthScreen from './src/screens/register/AuthScreen';
+import RegisterTwoScreen from './src/screens/registertwo/RegisterTwo';
 
 // Importation des deux gestionnaires d'état globaux (Contexts)
 import { FavoritesProvider } from './src/context/FavoritesContext';
 import { UserEventsProvider } from './src/context/UserEventsContext';
+import { RegisterProvider } from './src/context/RegisterContext';
 
 // Application du typage RootStackParamList au Stack Navigator
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -29,26 +31,31 @@ const App = () => {
     <FavoritesProvider>
       <UserEventsProvider>
         <NavigationContainer>
-          <StatusBar barStyle="dark-content" backgroundColor="#FAFAFA" />
-          <Stack.Navigator
-            initialRouteName="Splash"
-            screenOptions={{ headerShown: false }}
-          >
-            {/* Écran 1 : Splash Screen au démarrage */}
-            <Stack.Screen name="Splash" component={SplashScreen} />
+          <RegisterProvider>
+            <StatusBar barStyle="dark-content" backgroundColor="#FAFAFA" />
+              <Stack.Navigator
+                initialRouteName="Splash"
+                screenOptions={{ headerShown: false }}
+              >
+                {/* Écran 1 : Splash Screen au démarrage */}
+                <Stack.Screen name="Splash" component={SplashScreen} />
 
-            {/* Écran 2 : La barre d'onglets principale (Feed, Carte, Favoris, Profil) */}
-            <Stack.Screen name="MainTabs" component={TabNavigator} />
+                {/* Écran 2 : La barre d'onglets principale (Feed, Carte, Favoris, Profil) */}
+                <Stack.Screen name="MainTabs" component={TabNavigator} />
 
-            {/* Écran 3 : Les détails (qui s'ouvriront par-dessus les onglets) */}
-            <Stack.Screen name="EventDetails" component={EventDetails} />
+                {/*Ecran 3 :Les activités s'affichent après le login ou l'inscription*/}
+                <Stack.Screen name='EventsFeed' component={EventsFeed} />
 
-            {/* Écran 4 : Ecran de Login non utilisé pour le moment, voir si utile */}
-            <Stack.Screen name="Login" component={LoginScreen} />
+                {/* Écran 3 : Les détails (qui s'ouvriront par-dessus les onglets) */}
+                <Stack.Screen name="EventDetails" component={EventDetails} />
 
-            {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
-            <Stack.Screen name="Register" component={AuthScreen} />
-          </Stack.Navigator>
+                {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
+                <Stack.Screen name='Register' component={AuthScreen} />
+
+                {/* Ecran 2 enregistrement: Etape 2 avec la photo de profil ainsi que les détails du compte */}
+                <Stack.Screen name='RegisterTwo' component={RegisterTwoScreen} />
+              </Stack.Navigator>
+          </RegisterProvider>
         </NavigationContainer>
       </UserEventsProvider>
     </FavoritesProvider>
