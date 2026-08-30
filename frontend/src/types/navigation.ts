@@ -14,6 +14,10 @@ export interface EventItem {
   participants: number;
   maxParticipants: number;
   image: string;
+  coordinate?: {
+    latitude: number;
+    longitude: number;
+  };
 }
 
 // 2. On définit la liste des écrans et leurs paramètres associés

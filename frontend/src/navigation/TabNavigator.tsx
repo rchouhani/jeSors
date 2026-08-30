@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MapScreen from '../screens/map/MapScreen';
 
 // Importation de la liste des onglets officiels
 import { RootTabParamList } from '../types/navigation';
@@ -12,13 +13,13 @@ import Favorites from '../screens/favorite/Favorites';
 import MyEventsTab from '../screens/profile/MyEventsTab';
 
 // --- ÉCRANS TEMPORAIRES (En attendant de créer les fichiers d'écrans) ---
-function CarteScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Écran Carte</Text>
-    </View>
-  );
-}
+// function CarteScreen() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Écran Carte</Text>
+//     </View>
+//   );
+// }
 
 function FavorisScreen() {
   return (
@@ -72,7 +73,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Carte"
-        component={CarteScreen}
+        component={MapScreen}
         options={{ title: 'Carte' }}
       />
       <Tab.Screen

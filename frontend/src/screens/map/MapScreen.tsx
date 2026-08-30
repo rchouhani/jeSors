@@ -33,7 +33,7 @@ const MapScreen = () => {
       >
         {events.map(event => {
           // Sécurité : Vérifie que l'événement possède des coordonnées GPS
-          if (!event.coordinates?.latitude || !event.coordinates?.longitude) {
+          if (!event.coordinate?.latitude || !event.coordinate?.longitude) {
             return null;
           }
 
@@ -41,8 +41,8 @@ const MapScreen = () => {
             <Marker
               key={event.id}
               coordinate={{
-                latitude: event.coordinates.latitude,
-                longitude: event.coordinates.longitude,
+                latitude: event.coordinate.latitude,
+                longitude: event.coordinate.longitude,
               }}
               title={event.title}
             >
