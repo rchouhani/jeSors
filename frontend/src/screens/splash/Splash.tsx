@@ -12,7 +12,7 @@ const SplashScreen = ({ navigation }: Props) => {
   useEffect(() => {
     const chrono = setTimeout(() => {
       // Au bout de 3 secondes, on bascule vers le bloc d'onglets qui contientle feed
-      navigation.replace('MainTabs');
+      navigation.replace('Register');
     }, 3000);
 
     return () => clearTimeout(chrono);
