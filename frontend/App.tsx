@@ -40,6 +40,12 @@ const App = () => {
                 {/* Écran 1 : Splash Screen au démarrage */}
                 <Stack.Screen name="Splash" component={SplashScreen} />
 
+                {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
+                <Stack.Screen name='Register' component={AuthScreen} />
+
+                {/* Ecran 2 enregistrement: Etape 2 avec la photo de profil ainsi que les détails du compte */}
+                <Stack.Screen name='RegisterTwo' component={RegisterTwoScreen} />
+
                 {/* Écran 2 : La barre d'onglets principale (Feed, Carte, Favoris, Profil) */}
                 <Stack.Screen name="MainTabs" component={TabNavigator} />
 
@@ -49,11 +55,6 @@ const App = () => {
                 {/* Écran 3 : Les détails (qui s'ouvriront par-dessus les onglets) */}
                 <Stack.Screen name="EventDetails" component={EventDetails} />
 
-                {/* Écran 5 : Ecrans avec switch entre connexion et enregistrement */}
-                <Stack.Screen name='Register' component={AuthScreen} />
-
-                {/* Ecran 2 enregistrement: Etape 2 avec la photo de profil ainsi que les détails du compte */}
-                <Stack.Screen name='RegisterTwo' component={RegisterTwoScreen} />
               </Stack.Navigator>
           </RegisterProvider>
         </NavigationContainer>
