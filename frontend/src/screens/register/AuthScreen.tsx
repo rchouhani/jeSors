@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Platform, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, ScrollView, TextInput, Alert } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import InputComp from '../../components/Input';
 import ButtonComp from '../../components/Button';
 import ProgressBar from '../../components/ProgressBar';
 import { useRegister } from '../../context/RegisterContext';
+import { TEST_USER } from '../../data/testUser';
 
 type AuthNavigationParamList = {
     RegisterTwo: undefined;
     Login: undefined;
+    MainTabs: undefined;
 };
+
 
 const AuthScreen = () => {
     const navigation = useNavigation<NavigationProp<AuthNavigationParamList>>();
@@ -18,6 +21,14 @@ const AuthScreen = () => {
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
 
+    const handlelogin = () => {
+        if (pseudo === TEST_USER.email && password === TEST_USER.password) {
+            navigation.navigate('MainTabs');
+        } else {
+            Alert.alert('Email ou mot de passe incorrect');
+        }
+    }
+    
     useEffect(() => {
          if (!isLogin) return;
         const filled = [pseudo, password, confirm].filter(v => v.length > 0).length;
@@ -64,7 +75,7 @@ const AuthScreen = () => {
                         title={isLogin ? 'Suivant' : 'Se connecter'}
                         onPress={() => isLogin
                             ? navigation.navigate('RegisterTwo')
-                            : navigation.navigate('Login')
+                            : handlelogin()
                         }
                     />
                     <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
