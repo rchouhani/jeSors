@@ -1,109 +1,108 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import MapView, { Marker, Callout, PROVIDER_DEFAULT } from 'react-native-maps';
+import {
+  Map,
+  Camera,
+  ViewAnnotation,
+  type StyleSpecification,
+} from '@maplibre/maplibre-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-// Importation des types et données
 import { RootStackParamList, EventItem } from '../../types/navigation';
 import eventsData from '../../data/events.json';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-// Position initiale par défaut (Paris)
-const INITIAL_REGION = {
-  latitude: 48.8566,
-  longitude: 2.3522,
-  latitudeDelta: 0.0922,
-  longitudeDelta: 0.0421,
+// Style raster utilisant exclusivement les tuiles OpenStreetMap
+const OSM_STYLE: StyleSpecification = {
+  version: 8,
+  sources: {
+    osm: {
+      type: 'raster',
+      tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+      tileSize: 256,
+      maxzoom: 19,
+      attribution: '© OpenStreetMap contributors',
+    },
+  },
+  layers: [{ id: 'osm', type: 'raster', source: 'osm' }],
 };
+
+// Attention : MapLibre attend [longitude, latitude]
+const PARIS: [number, number] = [2.3522, 48.8566];
 
 const MapScreen = () => {
   const navigation = useNavigation<NavigationProp>();
   const events = eventsData as EventItem[];
+  const [selected, setSelected] = useState<EventItem | null>(null);
 
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        provider={PROVIDER_DEFAULT}
-        initialRegion={INITIAL_REGION}
-        showsUserLocation={true}
-        showsMyLocationButton={true}
-      >
+      <Map style={styles.map} mapStyle={OSM_STYLE} onPress={() => setSelected(null)}>
+        <Camera initialViewState={{ center: PARIS, zoom: 12 }} />
+
         {events.map(event => {
-          // Sécurité : Vérifie que l'événement possède des coordonnées GPS
           if (!event.coordinate?.latitude || !event.coordinate?.longitude) {
             return null;
           }
 
           return (
-            <Marker
+            <ViewAnnotation
               key={event.id}
-              coordinate={{
-                latitude: event.coordinate.latitude,
-                longitude: event.coordinate.longitude,
-              }}
-              title={event.title}
+              id={event.id}
+              lngLat={[event.coordinate.longitude, event.coordinate.latitude]}
+              anchor="bottom"
+              onPress={() => setSelected(event)}
             >
-              {/* Bulle d'information au clic sur le marqueur */}
-              <Callout
-                tooltip
-                onPress={() => navigation.navigate('EventDetails', { event })}
-              >
-                <View style={styles.calloutContainer}>
-                  <Text style={styles.calloutTitle}>{event.title}</Text>
-                  <Text style={styles.calloutSubtitle}>
-                    📅 {event.date} - 📍 {event.location}
-                  </Text>
-                  <Text style={styles.calloutAction}>Voir les détails ›</Text>
-                </View>
-              </Callout>
-            </Marker>
+              <View style={styles.marker}>
+                <Text style={styles.markerText}>📍</Text>
+              </View>
+            </ViewAnnotation>
           );
         })}
-      </MapView>
+      </Map>
+
+      {selected && (
+        <TouchableOpacity
+          style={styles.calloutContainer}
+          onPress={() => navigation.navigate('EventDetails', { event: selected })}
+        >
+          <Text style={styles.calloutTitle}>{selected.title}</Text>
+          <Text style={styles.calloutSubtitle}>
+            📅 {selected.date} - 📍 {selected.location}
+          </Text>
+          <Text style={styles.calloutAction}>Voir les détails ›</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-  },
+  container: { flex: 1 },
+  map: { flex: 1 },
+  marker: { alignItems: 'center', justifyContent: 'center' },
+  markerText: { fontSize: 30 },
   calloutContainer: {
+    position: 'absolute',
+    left: 16,
+    right: 16,
+    bottom: 24,
     backgroundColor: '#FFFFFF',
     padding: 12,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#E2E8F0',
-    width: 200,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 4,
     elevation: 3,
   },
-  calloutTitle: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    color: '#1A202C',
-    marginBottom: 4,
-  },
-  calloutSubtitle: {
-    fontSize: 12,
-    color: '#718096',
-    marginBottom: 6,
-  },
-  calloutAction: {
-    fontSize: 12,
-    color: '#3182CE',
-    fontWeight: '600',
-  },
+  calloutTitle: { fontWeight: 'bold', fontSize: 14, color: '#1A202C', marginBottom: 4 },
+  calloutSubtitle: { fontSize: 12, color: '#718096', marginBottom: 6 },
+  calloutAction: { fontSize: 12, color: '#3182CE', fontWeight: '600' },
 });
 
 export default MapScreen;
